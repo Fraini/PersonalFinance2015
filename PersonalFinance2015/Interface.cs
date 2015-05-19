@@ -136,6 +136,19 @@ namespace PersonalFinance2015
             Console.ReadLine();
         }
 
+        public void LoadData()
+        {
+            addData.Add("fraini");
+            addData.Add("fraini");
+            addData.Add("fraini");
+            if (addData.Count > 0)
+            {
+                Console.WriteLine("DESCRIPTION: ", addData[0]);
+                Console.WriteLine("DATE: ", addData[1]);
+                Console.WriteLine("CATEGORY: ", addData[2]);
+            }
+        }
+
         public void Menu()
         {
             do{
@@ -163,7 +176,10 @@ namespace PersonalFinance2015
                         AddNewCategory();
                     break;
                 case (int)menu.LIST:
-                   //TO DO
+                    Console.Clear();
+                    foreach(string v in addData){
+                       Console.WriteLine(v);
+                   }
                     break;
                 case (int)menu.SEARCH:
                     //TO DO

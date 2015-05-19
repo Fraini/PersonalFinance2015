@@ -13,7 +13,6 @@ namespace PersonalFinance2015
         static void Main(string[] args)
         {
             Interface m = new Interface();
-
             m.Menu();
         }
     }
