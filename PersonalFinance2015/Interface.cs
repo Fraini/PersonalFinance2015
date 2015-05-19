@@ -136,24 +136,13 @@ namespace PersonalFinance2015
             Console.ReadLine();
         }
 
-        public void LoadData()
-        {
-            addData.Add("fraini");
-            addData.Add("fraini");
-            addData.Add("fraini");
-            if (addData.Count > 0)
-            {
-                Console.WriteLine("DESCRIPTION: ", addData[0]);
-                Console.WriteLine("DATE: ", addData[1]);
-                Console.WriteLine("CATEGORY: ", addData[2]);
-            }
-        }
-
         public void Menu()
         {
+            Welcome w = new Welcome();
+            w.WelcomeScreen();
             do{
                 Console.SetCursorPosition(10,40);
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write("1-Income 2-Expense 3-Add category 4-List "+  
                             "5-Search 6-Exit  ");
                 try{
@@ -185,6 +174,7 @@ namespace PersonalFinance2015
                     //TO DO
                     break;
                 case (int)menu.EXIT:
+                    Console.Clear();
                     break;
             }
 
