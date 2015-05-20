@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+/*
+ *Class Welcome Screen
+ */
 
 namespace PersonalFinance2015
 {

@@ -1,4 +1,7 @@
-﻿//Fraini Sánchez V007
+﻿//Fraini Sánchez v13
+/*
+ *Class Income  with method and get 
+ */
 using System;
 using System.Collections.Generic;
 using System.Collections;

@@ -1,6 +1,7 @@
 ﻿//Fraini Sánchez V008
-//Debugging code
-//add Income
+/*
+ *Class Income what inherit of Expense with method and get 
+ */
 using System;
 using System.Collections.Generic;
 using System.Linq;

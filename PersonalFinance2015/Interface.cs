@@ -1,7 +1,7 @@
 ﻿//Fraini Sánchez V0012
-//IMPLEMENT CASE INCOME V010 
-//IMPLEMENT CASE EXPENSE V11
-//IMPLEMENT CASE CATEGORY V12
+/*
+ *Class Interface manage all class and method
+ */
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,14 +21,11 @@ namespace PersonalFinance2015
         public Interface()
         {
             addCategory = new List<Category>();
+            addExpense = new List<Expense>();
+            addIncome = new List<Income>();
         }
 
-        public void Load()
-        {
-            //Expense e = new Expense();
-            
-        }
-
+        //Add Income and Add Expense using delimiter "x¬" where x is number 0 -->Description ...
         public void AddNewCategory()
         {
             Console.Clear();
@@ -59,15 +56,15 @@ namespace PersonalFinance2015
             Console.Clear();
             Console.SetCursorPosition(15, 0);
             Console.Write("Description: ");
-            description = (Console.ReadLine());
+            description = "0¬"+(Console.ReadLine());
 
             Console.SetCursorPosition(15, 2);
             Console.Write("Quantity: ");
-            quantity = (Console.ReadLine());
+            quantity = "1¬"+(Console.ReadLine());
 
             Console.SetCursorPosition(15, 4);
             Console.Write("Date: ");
-            date = (Console.ReadLine());
+            date = "2¬"+(Console.ReadLine());
            
             Console.SetCursorPosition(15, 6);
             int top = 7;
@@ -84,7 +81,7 @@ namespace PersonalFinance2015
                 Console.SetCursorPosition(15, top++);
                 Console.Write("CHOOSE CATEGORY: ");
                 //add loop to choose correct
-                category = Console.ReadLine();
+                category = "3¬"+ Console.ReadLine();
                 Expense e = new Expense(description, date, quantity, category);
                 addExpense.Add(e);
              
@@ -102,7 +99,6 @@ namespace PersonalFinance2015
 
         public void AddNewIncome()
         {
-
             string description;
             string date;
             string quantity;
@@ -111,15 +107,15 @@ namespace PersonalFinance2015
             Console.Clear();
             Console.SetCursorPosition(15, 0);
             Console.Write("Description: ");
-            description = (Console.ReadLine());
+            description ="0¬"+ (Console.ReadLine());
 
             Console.SetCursorPosition(15, 2);
             Console.Write("Quantity: ");
-            quantity = (Console.ReadLine());
+            quantity = "1¬"+(Console.ReadLine());
 
             Console.SetCursorPosition(15, 4);
             Console.Write("Date: ");
-            date = (Console.ReadLine());
+            date = "2¬"+(Console.ReadLine());
 
             Console.SetCursorPosition(15, 6);
             int top = 7;
@@ -136,7 +132,7 @@ namespace PersonalFinance2015
                 Console.SetCursorPosition(15, top++);
                 Console.Write("CHOOSE CATEGORY: ");
                 //add loop to choose correct
-                category = Console.ReadLine();
+                category = "3¬"+ Console.ReadLine();
                 Income i = new Income (description, date, quantity, category);
                 addIncome.Add(i);
 
@@ -181,9 +177,9 @@ namespace PersonalFinance2015
                     break;
                 case (int)menu.LIST:
                     Console.Clear();
-                    //foreach(string v in addData){
-                      // Console.WriteLine(v);
-                   //}
+                    foreach(Category v in addCategory){
+                       Console.WriteLine(v);
+                   }
                     break;
                 case (int)menu.SEARCH:
                     //TO DO
@@ -193,9 +189,7 @@ namespace PersonalFinance2015
                     break;
             }
 
-            }while( (option != (int) menu.EXIT));
-            
+            }while( (option != (int) menu.EXIT));  
         }
-
     }
 }

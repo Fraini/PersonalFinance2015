@@ -1,5 +1,7 @@
 ﻿//Fraini Sánchez V00
-//Debugging code
+/*
+ *Class category with method and get 
+ */
 using System;
 using System.Collections.Generic;
 using System.Linq;
