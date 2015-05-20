@@ -11,9 +11,10 @@ namespace PersonalFinance2015
 {
     class Income : Expense
     {
-        public Income()
+        public Income(string description, string date, string quantity, string category) : base(
+             description,date,quantity,category )
         {
-            //TODO
+           
         }
 
         public override void SetDate(string date)
@@ -35,5 +36,26 @@ namespace PersonalFinance2015
         {
             return base.getDescription();
         }
+
+        public override void SetQuantity(string value)
+        {
+            base.SetQuantity(value);
+        }
+
+        public override string GetQuantity()
+        {
+            return base.GetQuantity();
+        }
+
+        public override void setNameCategory(string newValue)
+        {
+            base.setNameCategory(newValue);
+        }
+
+        public override string GetNameCategory()
+        {
+            return base.GetNameCategory();
+        }
+
     }
 }

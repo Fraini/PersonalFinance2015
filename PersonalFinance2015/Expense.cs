@@ -8,20 +8,21 @@ using System.Threading.Tasks;
 
 namespace PersonalFinance2015
 {
-    class Expense 
+    class Expense : Category
     {
         private string description;
         private string date;
-        private ArrayList addExpense;
-
-        public Expense()
+        private string quantity;
+       
+        public Expense(string description,string date,string quantity,string category) : base(category)
         {
-            addExpense = new ArrayList();
+            this.description = description;
+            this.date = date;
+            this.quantity = quantity; 
         }
 
         public virtual void setDescription(string description){
             this.description = description;
-            addExpense.Add(".¬"+description);
         }
 
         public virtual string getDescription()
@@ -32,12 +33,32 @@ namespace PersonalFinance2015
         public virtual void SetDate(string date)
         {
             this.date = date;
-            addExpense.Add(";¬" + description);
         }
 
         public virtual string getDate()
         {
             return this.date;
         }
+
+        public virtual void SetQuantity(string value)
+        {
+            this.quantity = value;
+        }
+
+        public virtual string GetQuantity()
+        {
+            return this.quantity;
+        }
+
+        public override void setNameCategory(string newValue)
+        {
+            base.setNameCategory(newValue);
+        }
+
+        public override string GetNameCategory()
+        {
+            return base.GetNameCategory();
+        }
+
     }
 }

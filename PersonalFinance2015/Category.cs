@@ -10,22 +10,20 @@ namespace PersonalFinance2015
 {
     class Category
     {
-        private int key;
-        private string value;
-        public Category()
+        protected string name;
+        public Category(string name)
         {
-
+            this.name = name;
         }
 
-        public void setNameCategory(int newKey,string newValue)
+        public virtual void setNameCategory(string newValue)
         {
-            this.key = newKey;
-            this.value = newValue;
+            this.name = newValue;
         }
 
-        public string GetName()
+        public virtual string GetNameCategory()
         {
-            return this.key +" - "+this.value;
+            return this.name;
         }
     }
 }
