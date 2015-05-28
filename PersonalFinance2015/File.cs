@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+
 //I made a load and save method for Income,Expense and Category
 //I putted the 3 save methods in the interface and it seems to work
 namespace PersonalFinance2015
@@ -13,7 +14,7 @@ namespace PersonalFinance2015
     class DataFile
     {
         private StreamReader sr;
-        private StreamWriter sw,sw2,sw3;
+        private StreamWriter sw, sw2, sw3;
         private string description;
         private string date;
         private string amount;
@@ -29,14 +30,14 @@ namespace PersonalFinance2015
                 StreamWriter createFile = new StreamWriter("Incomes.txt");
                 createFile.Close();
             }
-            
+
             sr = new StreamReader("Incomes.txt", false);
-            string line ="";
+            string line = "";
             do
             {
                 line = sr.ReadLine();
 
-                if (line != "" && line != null  )
+                if (line != "" && line != null)
                 {
                     description = line.Substring(13);
                 }
@@ -64,7 +65,7 @@ namespace PersonalFinance2015
                     Income LoadingIncome = new Income(description, date, amount, category);
                     LoadedIncomes.Add(LoadingIncome);
                 }
-                    
+
             } while (line != null);
 
             sr.Close();
@@ -74,16 +75,16 @@ namespace PersonalFinance2015
         public List<Expense> LoadExpenses()
         {
             List<Expense> LoadedExpenses = new List<Expense>();
-     
+
             if (!File.Exists("Expenses.txt"))
             {
                 StreamWriter createFile = new StreamWriter("Expenses.txt");
                 createFile.Close();
             }
 
-            sr = new StreamReader("Expenses.txt",false);
-           
-            string line ="";
+            sr = new StreamReader("Expenses.txt", false);
+
+            string line = "";
 
             do
             {
@@ -100,14 +101,14 @@ namespace PersonalFinance2015
                 {
                     date = line.Substring(5);
                 }
-                
+
                 line = sr.ReadLine();
 
                 if (line != null)
                 {
                     amount = line.Substring(7);
                 }
-                
+
                 line = sr.ReadLine();
                 if (line != null)
                     category = line.Substring(9);
@@ -117,7 +118,7 @@ namespace PersonalFinance2015
                     Expense LoadingExpense = new Expense(description, date, amount, category);
                     LoadedExpenses.Add(LoadingExpense);
                 }
-                
+
 
             } while (line != null);
 
@@ -125,9 +126,9 @@ namespace PersonalFinance2015
             return LoadedExpenses;
         }
 
-        public List<Category> LoadCategory()
+        public Dictionary<int,Category> LoadCategory()
         {
-            List<Category> LoadedCategory = new List<Category>();
+            Dictionary<int, Category> LoadedCategory = new Dictionary<int, Category>();
 
             if (!File.Exists("Category.txt"))
             {
@@ -137,14 +138,16 @@ namespace PersonalFinance2015
 
             sr = new StreamReader("Category.txt", true);
             string line;
-
+            LoadedCategory.Clear();
+            int key = 0;
             do
             {
                 line = sr.ReadLine();
-                if (line != null)
+                if (line != "" && line != null)
                 {
-                    Category LoadingCategory = new Category(line);
-                    LoadedCategory.Add(LoadingCategory);
+                    Category LoadingCategory = new Category(line.Substring(14));
+                   LoadedCategory.Add(key,LoadingCategory);
+                   key++;
                 }
 
             } while (line != null);
@@ -169,17 +172,17 @@ namespace PersonalFinance2015
 
             foreach (Expense searchingExpenses in Expenses)
             {
-                sw.WriteLine("Description: " + searchingExpenses.GetDescription());
-                sw.WriteLine("Date: " + searchingExpenses.GetDate());
-                sw.WriteLine("Amount: " + searchingExpenses.GetQuantity());
-                sw.WriteLine("Category: " + searchingExpenses.GetNameCategory());
+                sw.WriteLine("Description: " + searchingExpenses.GetDescription().Trim());
+                sw.WriteLine("Date: " + searchingExpenses.GetDate().Trim());
+                sw.WriteLine("Amount: " + searchingExpenses.GetQuantity().Trim());
+                sw.WriteLine("Category: " + searchingExpenses.GetNameCategory().Trim());
             }
             sw.Close();
-            
+
         }
         public void SaveIncomes(List<Income> Incomes)
         {
-             //Saving all parts of the incomes
+            //Saving all parts of the incomes
             if ((File.Exists("Incomes.txt")))
             {
                 sw2 = File.CreateText("Incomes.txt");
@@ -200,24 +203,22 @@ namespace PersonalFinance2015
 
             sw2.Close();
         }
-        public void SaveCategory(List<Category> Categories)
+        public void SaveCategoryFile(Category Categories)
         {
             //Saving category names
             if ((File.Exists("Category.txt")))
             {
-                sw3 = File.CreateText("Category.txt");
+                sw3 = File.AppendText("Category.txt");
             }
             //If not exist
             else
             {
-                sw3 = new StreamWriter("Category.txt",false);
+                sw3 = new StreamWriter("Category.txt", false);
             }
-            
-            foreach (Category searchingCategories in Categories)
-            {
-                sw3.WriteLine("Category name: " + searchingCategories.GetNameCategory().Substring(15));
 
-            }
+                sw3.WriteLine("Category name: " + 
+                 Categories.GetNameCategory());
+            
             sw3.Close();
         }
     }

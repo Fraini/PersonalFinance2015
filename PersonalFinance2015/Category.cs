@@ -11,9 +11,17 @@ namespace PersonalFinance2015
     class Category
     {
         protected string name;
+        protected int key;
         public Category(string name)
         {
             this.name = name;
+        }
+
+        //This constructor for use dictionary
+        public Category(int key, string name)
+        {
+            this.name = name;
+            this.key = key;
         }
 
         public virtual void SetNameCategory(string newValue)
@@ -24,6 +32,16 @@ namespace PersonalFinance2015
         public virtual string GetNameCategory()
         {
             return this.name;
+        }
+
+        public virtual void  SetKey(int key)
+        {
+            this.key = key;
+        }
+
+        public virtual int GetKey()
+        {
+            return this.key;
         }
     }
 }
