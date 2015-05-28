@@ -1,7 +1,4 @@
-﻿//Fraini Sánchez v13
-/*
- *Class Income  with method and get 
- */
+﻿//Fraini Sánchez V0014
 using System;
 using System.Collections.Generic;
 using System.Collections;
@@ -24,11 +21,11 @@ namespace PersonalFinance2015
             this.quantity = quantity; 
         }
 
-        public virtual void setDescription(string description){
+        public virtual void SetDescription(string description){
             this.description = description;
         }
 
-        public virtual string getDescription()
+        public virtual string GetDescription()
         {
             return this.description;
         }
@@ -38,7 +35,7 @@ namespace PersonalFinance2015
             this.date = date;
         }
 
-        public virtual string getDate()
+        public virtual string GetDate()
         {
             return this.date;
         }
@@ -53,9 +50,9 @@ namespace PersonalFinance2015
             return this.quantity;
         }
 
-        public override void setNameCategory(string newValue)
+        public override void SetNameCategory(string newValue)
         {
-            base.setNameCategory(newValue);
+            base.SetNameCategory(newValue);
         }
 
         public override string GetNameCategory()

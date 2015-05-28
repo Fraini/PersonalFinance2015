@@ -1,7 +1,5 @@
-﻿//Fraini Sánchez V00
-/*
- *Class category with method and get 
- */
+﻿//Fraini Sánchez V14
+//Debugging code
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +16,7 @@ namespace PersonalFinance2015
             this.name = name;
         }
 
-        public virtual void setNameCategory(string newValue)
+        public virtual void SetNameCategory(string newValue)
         {
             this.name = newValue;
         }

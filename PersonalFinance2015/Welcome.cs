@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-/*
- *Class Welcome Screen
- */
 
 namespace PersonalFinance2015
 {
@@ -37,7 +34,7 @@ namespace PersonalFinance2015
 
            Console.SetCursorPosition(23,15);
            Console.BackgroundColor = ConsoleColor.Black;
-           Console.Write("Press Any Key To Menu...");
+           Console.Write("Press Any Key To Show Menu...");
            Console.ReadLine();
         }
     }

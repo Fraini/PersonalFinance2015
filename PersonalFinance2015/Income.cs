@@ -1,7 +1,6 @@
 ﻿//Fraini Sánchez V008
-/*
- *Class Income what inherit of Expense with method and get 
- */
+//Debugging code
+//add Income
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,19 +22,19 @@ namespace PersonalFinance2015
             base.SetDate(date);
         }
 
-        public override string getDate()
+        public override string GetDate()
         {
-            return base.getDate();
+            return base.GetDate();
         }
 
-        public override void setDescription(string description)
+        public override void SetDescription(string description)
         {
-            base.setDescription(description);
+            base.SetDescription(description);
         }
 
-        public override string getDescription()
+        public override string GetDescription()
         {
-            return base.getDescription();
+            return base.GetDescription();
         }
 
         public override void SetQuantity(string value)
@@ -48,15 +47,14 @@ namespace PersonalFinance2015
             return base.GetQuantity();
         }
 
-        public override void setNameCategory(string newValue)
+        public override void SetNameCategory(string newValue)
         {
-            base.setNameCategory(newValue);
+            base.SetNameCategory(newValue);
         }
 
         public override string GetNameCategory()
         {
             return base.GetNameCategory();
         }
-
     }
 }
