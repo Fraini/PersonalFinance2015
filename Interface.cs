@@ -207,11 +207,6 @@ namespace PersonalFinance2015
             Console.ReadLine();
         }
 
-        //Method send dictionary to list 
-       /* public Dictionary<int, Category> category()
-        {
-            return this.addCategory;
-        }*/
 
         public void Menu()
         {

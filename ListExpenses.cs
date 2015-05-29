@@ -90,17 +90,19 @@ namespace PersonalFinance2015
             Console.Write("Total Incomes {0}  Total Expenses {1} "
                                       , totalIncomes, totalExpenses);
             Console.SetCursorPosition(15, 9);
-            Console.WriteLine("-------------------------------------------------");
+            Console.WriteLine("------------------------------------------------");
             Console.SetCursorPosition(15, 10);
             if (totalIncomes - totalExpenses < 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write("Monthly difference: {0} ", totalIncomes - totalExpenses);
+                Console.Write("Monthly difference: {0} ", 
+                            totalIncomes - totalExpenses);
                 Console.ResetColor();
                 Console.ForegroundColor = ConsoleColor.Green;
             }
             else
-                Console.Write("Monthly difference: {0} ", totalIncomes - totalExpenses);
+                Console.Write("Monthly difference: {0} ", 
+                                totalIncomes - totalExpenses);
 
 
         }
@@ -109,20 +111,68 @@ namespace PersonalFinance2015
         {
             //TODO
 
-            /*List<Expense> e = new List<Expense>();
+            List<Expense> e = new List<Expense>();
             e = data.LoadExpenses();
+            List<Income> income = new List<Income>();
+            income = data.LoadIncomes();
             Dictionary<int, Category> c = new Dictionary<int, Category>();
             c = data.LoadCategory();
             List<string> aux = new List<string>();
-            foreach(Expense exp in e){
-                //Console.WriteLine(exp.GetNameCategory());   //0 1 ..
-                //aux.Add(exp.GetNameCategory());  
-                aux.Add(exp.GetDescription());
-                aux.Add(exp.GetDate());
-                aux.Add(exp.GetQuantity());
-                //aux.Add(c[exp.GetNameCategory()].GetNameCategory());
-            }*/
+
+            Console.Clear();
+
             
+             for (int x = 0; x < e.Count; x++)
+             {
+                 aux.Add("Description:" + e[x].GetDescription());
+                 aux.Add("Date:"+e[x].GetDate());
+                 aux.Add("Amount:"+e[x].GetQuantity());
+                 aux.Add("Category: " + c[Convert.ToInt32(
+                     e[x].GetNameCategory())].GetNameCategory());
+                 
+             }
+
+             //Esto falla ;)
+            /* for (int i = 0; i < income.Count; i++ )
+             {
+
+                 Console.WriteLine(income[i].GetNameCategory());
+                 /*aux.Add("Description:" + income[i].GetDescription());
+                 aux.Add("Date:" + income[i].GetDate());
+                 aux.Add("Amount:" + income[i].GetQuantity());
+                 aux.Add("Category: " + c[Convert.ToInt32(
+                        income[i].GetNameCategory())].GetNameCategory()
+                     );
+             }*/
+
+            foreach (string v in aux)
+            {
+                Console.WriteLine(v);
+            }
+
+            Console.ReadLine();
+
         }
+
+        /*static int  CompareCategory(Expense e, Income i)
+        {
+            if (e == null)
+            {
+                if (i == null)
+                    return 0;
+                else
+                    return -1;
+            }
+            else
+            {
+                int value = e.GetNameCategory().Length.CompareTo
+                        (i.GetNameCategory().Length);
+                if (value != 0)
+                    return value;
+                else
+                    return e.GetNameCategory().CompareTo(i.GetNameCategory());
+            }
+                
+        }*/
     }
 }
