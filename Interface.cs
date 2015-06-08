@@ -1,5 +1,4 @@
 ﻿//Fraini Sánchez V0014
-//Falla al guardar categoria y al hacer el calculo de total Expenses
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +24,7 @@ namespace PersonalFinance2015
             userFile = new DataFile();
         }
 
+        //load data generated in the class DataFile
         public void Load()
         {
             addCategory = userFile.LoadCategory();
@@ -33,23 +33,18 @@ namespace PersonalFinance2015
 
         }
 
+        //save a new category in the dictionary and class category
         public Dictionary<int,Category> SavedCategory(int key,string name)
         {
-            Category c = new Category(key,name);
+            Category c = new Category(key, name);
             userFile.SaveCategoryFile(c);
-            addCategory.Add(key++,c);
+            addCategory.Add(key, c);
             
             return addCategory;
         }
 
-        public List<Expense> SavedCategory(string d, string dt, string q, string c)
-        {
-            Expense e = new Expense(d, dt, q, c);
-            addExpense.Add(e);
-            return addExpense;
-
-        }
-
+        
+        //method that handles Add categories
         public void AddNewCategory()
         {
             Console.Clear();
@@ -60,27 +55,31 @@ namespace PersonalFinance2015
 
             while (name != "")
             {
-
                 if (name != "")
-                    SavedCategory(key,name);
+                {
+                    if(key ==  0)
+                        SavedCategory(++key, name); 
+                    else
+                        SavedCategory(++key, name);  
+                }
 
-                Console.Write("Name?: ");
                 name = Console.ReadLine();
-
+                if (name != "")
+                    Console.Write("Name?: ");
             }
 
             Console.Write("Press any key to exit....");
             Console.ReadLine();
-            //Saving always at the end
             Console.Clear();
         }
 
-        public void AddNewExpense()
+        //methods adding expense and income
+        public void Add(int num)
         {
             string description;
             string date;
-            string quantity;
-            string category;
+            int amount = 0;
+            int category = -1;
 
             Console.Clear();
             Console.SetCursorPosition(15, 0);
@@ -88,75 +87,22 @@ namespace PersonalFinance2015
             description = (Console.ReadLine());
 
             Console.SetCursorPosition(15, 2);
-            Console.Write("Write Amount: ");
-            quantity = (Console.ReadLine());
-
+            Console.Write("Write Amount Example [ 100 ]: ");
+            try
+            {
+                amount = Convert.ToInt32(Console.ReadLine());
+            }
+            catch (FormatException )
+            {
+                Console.WriteLine("the chain does not have the correct format");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error", e);
+            }
+            
             Console.SetCursorPosition(15, 4);
-            Console.Write("Write Date Format YYYY/M/D: [Empty current date]");
-            date = (Console.ReadLine());
-            //if the user not insert date, automatically get date today
-            if (date == "")
-            {
-                string datePatt = @"yyyy/M/d";
-                DateTime d = DateTime.Now;
-                date = d.ToString(datePatt);
-            }
-
-            Console.SetCursorPosition(15, 6);
-            int top = 7;
-            Console.WriteLine("Write CATEGORY: ");
-
-            if (addCategory.Count > 0)
-            {
-
-                foreach (KeyValuePair<int, Category> data in addCategory)
-                {
-                    Console.SetCursorPosition(15, top++);
-                    Console.WriteLine(data.Key +" "+data.Value.GetNameCategory());
-                }
-
-                Console.SetCursorPosition(15, top++);
-                Console.Write("CHOOSE CATEGORY: ");
-                //add loop to choose correct
-                category = Console.ReadLine();
-                SavedCategory(description, date, quantity, category);
-            }
-            else
-            {
-                Console.SetCursorPosition(15, top++);
-                Console.WriteLine("No category, we will create a category");
-            }
-
-            //Saving always at the end of the file
-            userFile.SaveExpenses(addExpense);
-
-            Console.SetCursorPosition(15, top++);
-            Console.Write("Press any key to exit....");
-            Console.ReadLine();
-            Console.Clear();
-
-
-        }
-
-        public void AddNewIncome()
-        {
-
-            string description;
-            string date;
-            string quantity;
-            string category;
-
-            Console.Clear();
-            Console.SetCursorPosition(15, 0);
-            Console.Write("Write Description: ");
-            description = (Console.ReadLine());
-
-            Console.SetCursorPosition(15, 2);
-            Console.Write("Write Amount: ");
-            quantity = (Console.ReadLine());
-
-            Console.SetCursorPosition(15, 4);
-            Console.Write("Write Date Format YYYY/M/D: [Empty current date]");
+            Console.Write("Write Date Format YYYY/M/D [Empty current date]: ");
             date = (Console.ReadLine());
 
             if (date == "")
@@ -176,14 +122,37 @@ namespace PersonalFinance2015
                 foreach (KeyValuePair<int, Category> data in addCategory)
                 {
                     Console.SetCursorPosition(15, top++);
-                    Console.WriteLine(data.Key+ " "+data.Value.GetNameCategory());
+                    Console.WriteLine(data.Key + " " + data.Value.GetNameCategory());
                 }
                 Console.SetCursorPosition(15, top++);
                 Console.Write("CHOOSE CATEGORY: ");
-                //add loop to choose correct
-                category = Console.ReadLine();
-                Income i = new Income(description, date, quantity, category);
-                addIncome.Add(i);
+           
+                try
+                {
+                    category = Convert.ToInt32(Console.ReadLine());
+                }
+                catch (FormatException e)
+                {
+                    Console.WriteLine("Error: " + e);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error", e);
+                }
+
+                if (num == 1)
+                {
+                    Income i = new Income(description, date, amount, category);
+                    addIncome.Add(i);
+                    userFile.SaveIncomes(addIncome);
+                }
+
+                if(num == 2)
+                {
+                    Expense e = new Expense(description, date, amount, category);
+                    addExpense.Add(e);
+                    userFile.SaveExpenses(addExpense);
+                }
             }
             else
             {
@@ -194,20 +163,221 @@ namespace PersonalFinance2015
             Console.SetCursorPosition(15, top++);
             Console.Write("Press any key to exit....");
             Console.ReadLine();
-            //Saving always at the end of the file
-            userFile.SaveIncomes(addIncome);
             Console.Clear();
         }
 
+        //calls the method that shows all income and expense data
         public void List()
         {
             ListExpenses list = new ListExpenses();
-            Console.SetCursorPosition(15, 5);
             list.DisplayAll();
-            Console.ReadLine();
         }
 
+        public void search()
+        {
+            Console.Clear();
+            string text = "";
+           
+            do
+            {
+                Console.SetCursorPosition(23, 0);
+                Console.WriteLine("0-SEARCH BY CATEGORY");
+                Console.SetCursorPosition(23, 1);
+                Console.WriteLine("1-SEARCH BY TWO DATE");
+                Console.SetCursorPosition(23, 2);
+                Console.WriteLine("2-SEARCH EXPENSE");
+                Console.SetCursorPosition(23, 3);
+                Console.WriteLine("3-SEARCH INCOME");
+                Console.SetCursorPosition(23, 4);
+                text = Console.ReadLine();
+            } while (text == " ");
+            Console.Clear();
+            
+            bool exit = false;
+            ConsoleKeyInfo keyInfo;
+            do
+            {
+                Console.Clear();
+                if (text == "0")
+                    Search(text);
+                else if (text == "1")
+                    SearchBetweenTwoDates();
+                else if (text == "2")
+                    SearchExpenseOrIncome(text);
+                else if (text == "3")
+                    SearchExpenseOrIncome(text);
+                    
+                keyInfo = Console.ReadKey();
+                Console.SetCursorPosition(0, 24); //END CONSOLE
 
+                if (keyInfo.Key == ConsoleKey.Escape)
+                    exit = true;
+
+                if (keyInfo.Key == ConsoleKey.UpArrow)
+                {
+                    //TODO
+                }
+
+                if (keyInfo.Key == ConsoleKey.DownArrow)
+                {
+                    //TODO
+                }
+
+
+
+            } while (!exit);
+            Console.Clear();
+            Console.WriteLine("Press any key to show Menu...");
+            
+            
+        }
+
+        public void SearchExpenseOrIncome(string text)
+        {
+            if (text == "2")
+            {
+                bool found = false;
+                text = "";
+                Console.WriteLine("Enter text to search in expense");
+                text = Console.ReadLine();
+
+                foreach (Expense value in addExpense)
+                {
+                    if (value.GetDescription().Contains(text) ||
+                        value.GetDate().Contains(text) ||
+                        value.GetAmount().Equals(text) ||
+                        value.GetNameCategory().Contains(text))
+                    {
+                        Console.WriteLine(value.GetDescription()
+                             + value.GetAmount() + value.GetDate());
+                        found = true;
+                    }
+                }
+
+                if (!found)
+                {
+                    Console.WriteLine("Error Not data Found!!");
+                }
+            }
+
+            if (text == "3")
+            {
+                bool found = false;
+                text = "";
+                Console.WriteLine("Enter text to search in expense");
+                text = Console.ReadLine();
+
+                foreach (Income value in addIncome)
+                {
+                    if (value.GetDescription().Contains(text) ||
+                        value.GetDate().Contains(text) ||
+                        value.GetAmount().Equals(text) ||
+                        value.GetNameCategory().Contains(text))
+                    {
+                        Console.WriteLine(value.GetDescription()
+                             + value.GetAmount() + value.GetDate());
+                        found = true;
+                    }
+                }
+
+                if (!found)
+                {
+                    Console.WriteLine("Error Not data Found!!");
+                }
+            }
+
+        }
+
+        public void SearchBetweenTwoDates()
+        {
+            string dateFirst = "";
+            string dateSecond = "";
+            bool found = false; 
+            Console.WriteLine("From: first date Example 2015/5/26 ");
+            dateFirst = Console.ReadLine();
+
+            Console.WriteLine("To: Example 2015/5/27");
+            dateSecond = Console.ReadLine();
+            Console.Clear();
+
+            foreach(Expense value in addExpense){
+
+                if (dateFirst.CompareTo(value.GetDate().Trim()) > 0 
+                    || dateSecond.CompareTo(value.GetDate().Trim()) > 0 )
+                {
+                    Console.WriteLine(value.GetDate() + value.GetDescription());
+                    found = true;
+                }
+            }
+
+            foreach (Income value in addIncome)
+            {
+
+                if (dateFirst.CompareTo(value.GetDate().Trim()) > 0
+                    || dateSecond.CompareTo(value.GetDate().Trim()) > 0)
+                {
+                    Console.WriteLine(value.GetDate() + 
+                                value.GetDescription());
+                    found = true;
+                }
+            }
+
+            if(!found)
+                Console.WriteLine("NO DATA FOUND");
+
+        }
+        public void Search(string text)
+        {
+            Console.Clear();
+            int top = 4;
+            Console.SetCursorPosition(23, 3);
+            Console.WriteLine("Enter Number of category : ");
+            Console.Write("");
+            if (addCategory.Count > 0)
+            {
+
+                foreach (KeyValuePair<int, Category> data in addCategory)
+                {
+                    Console.SetCursorPosition(23, top++);
+                    Console.WriteLine(data.Key + " " + 
+                            data.Value.GetNameCategory());
+                }
+            }
+            Console.SetCursorPosition(23, top++);
+            text = Console.ReadLine();
+            Console.Clear();
+
+            Console.WriteLine("ESC- EXIT");
+            Console.WriteLine("###################INCOME####################");
+            foreach (Expense exp in addExpense)
+            {
+                if (addCategory.ContainsKey(Convert.ToInt32(text)))
+                {
+                    Console.WriteLine("Date:" + exp.GetDate() + " Amount:" +
+                        exp.GetAmount() + " Category:" +
+                         addCategory[Convert.ToInt32(text)].
+                         GetNameCategory());
+                    Console.WriteLine("Description:" + exp.GetDescription());
+                    Console.WriteLine("----------------------------------------");
+                }
+            }
+
+            Console.WriteLine("###################INCOME####################");
+            foreach (Income income in addIncome)
+            {
+                if (addCategory.ContainsKey(Convert.ToInt32(text)))
+                {
+                    Console.WriteLine("Date:" + income.GetDate() + " Amount:" +
+                        income.GetAmount() + " Category:" +
+                         addCategory[Convert.ToInt32(text)].
+                         GetNameCategory());
+                    Console.WriteLine("Description:" + income.GetDescription());
+                    Console.WriteLine("----------------------------------------");
+                }
+            }
+        }
+
+        //method displays the main menu of the application
         public void Menu()
         {
             Welcome w = new Welcome();
@@ -229,16 +399,19 @@ namespace PersonalFinance2015
                 }
                 catch (FormatException e)
                 {
-                    Console.WriteLine("Error: ", e);
+                    Console.WriteLine("Format Exception: ", e);
+                }
+                catch(Exception e){
+                    Console.WriteLine("Error",e);
                 }
 
                 switch (option)
                 {
                     case (int)menu.INCOME:
-                        AddNewIncome();
+                        Add(1);
                         break;
                     case (int)menu.EXPENSE:
-                        AddNewExpense();
+                        Add(2);
                         break;
                     case (int)menu.CATEGORY:
                         AddNewCategory();
@@ -247,8 +420,7 @@ namespace PersonalFinance2015
                         List();
                         break;
                     case (int)menu.SEARCH:
-                        Console.WriteLine("NOT IMPLEMENT");
-                        //TO DO
+                        search();
                         break;
                     case (int)menu.HELP:
                         w.Help();
